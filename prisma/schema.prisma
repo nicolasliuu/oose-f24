@@ -14,20 +14,43 @@ datasource db {
 }
 
 model Book {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String      @id @default(auto()) @map("_id") @db.ObjectId
   title       String
-  author      Author   @relation(fields: [authorId], references: [id])
-  authorId    String   @db.ObjectId
+  author      Author      @relation(fields: [authorId], references: [id])
+  authorId    String      @db.ObjectId
   description String?
-  isbn        String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  isbn        String?     @unique
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  users       UserBook[]  
 }
 
 model Author {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
   name      String
   books     Book[]
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+model User {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  username  String      @unique
+  password  String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  savedBooks UserBook[] 
+}
+
+model UserBook {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  bookId    String   @db.ObjectId
+  user      User     @relation(fields: [userId], references: [id])
+  book      Book     @relation(fields: [bookId], references: [id])
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  
+  @@unique([userId, bookId])  // Ensure that a user can save a book only once
 }

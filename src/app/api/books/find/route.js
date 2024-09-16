@@ -5,36 +5,46 @@ const prisma = new PrismaClient();
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
-  const title = searchParams.get('title')?.trim();
-  const authorName = searchParams.get('author')?.trim();
-  const isbn = searchParams.get('isbn')?.trim();
+  const userId = searchParams.get('userId');  // The userId comes as a string
+  const title = searchParams.get('title') || '';
+  const authorName = searchParams.get('author') || '';
+  const isbn = searchParams.get('isbn') || '';
 
-  // Dynamically build the filters object
-  const filters = {};
-
-  if (title) {
-    filters.title = { contains: title, mode: 'insensitive' };
-  }
-
-  if (isbn) {
-    filters.isbn = { contains: isbn };
-  }
-
-  if (authorName) {
-    filters.author = { name: { contains: authorName, mode: 'insensitive' } };
+  // Convert userId to ObjectId
+  if (!userId || userId === "null") {
+    return NextResponse.json({ error: 'Valid User ID is required' }, { status: 400 });
   }
 
   try {
-    const books = await prisma.book.findMany({
-      where: filters,
+    // Convert userId string to ObjectId
+    const objectIdUserId = userId && { equals: userId };
+
+    // Query UserBook with filters
+    const books = await prisma.userBook.findMany({
+      where: {
+        userId: objectIdUserId,
+        book: {
+          title: { contains: title, mode: 'insensitive' },
+          isbn: { contains: isbn, mode: 'insensitive' },
+          author: {
+            name: { contains: authorName, mode: 'insensitive' },
+          },
+        },
+      },
       include: {
-        author: true,
+        book: {
+          include: {
+            author: true,
+          },
+        },
       },
     });
 
-    return NextResponse.json(books);
+    // Map and return the books
+    const userBooks = books.map((userBook) => userBook.book);
+    return NextResponse.json(userBooks);
   } catch (error) {
-    console.error(error);
+    console.error('Error fetching books:', error);
     return NextResponse.json({ error: 'Failed to fetch books' }, { status: 500 });
   }
 }
