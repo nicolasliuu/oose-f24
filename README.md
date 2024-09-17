@@ -1,36 +1,105 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# MyBooksApp
+
+DEPLOYMENT AT: https://oose-mybooks.vercel.app/
+This is a Next.js application that allows users to log in, add books, search for books, and view their personal collection. The app is built with Prisma and MongoDB for data storage.
+
+## Features
+
+- User authentication (login/sign-up).
+- Add new books with title, author, and ISBN.
+- View and search personal book collections.
+- Unique ISBN constraint on books.
+- Responsive, dynamic UI
+
+## Prerequisites
+
+Before you start, make sure you have the following installed:
+
+- [Node.js](https://nodejs.org/) (version 14 or higher)
+- [npm](https://www.npmjs.com/) (comes with Node.js)
 
 ## Getting Started
 
-First, run the development server:
+Follow these steps to run the project locally.
 
-```bash
+### 1. Clone the Repository
+
+First, clone the repository to your local machine:
+
+[git clone https://github.com/your-username/mybooksapp.git](https://github.com/jhu-oose-f24/homework-1-nicolasliuu)
+cd hw1-task
+
+### 2. Install Dependencies
+
+Once you're in the project directory, run the following command to install the required dependencies:
+
+npm install
+
+### 3. Set Up Environment Variables
+
+This application requires a connection to a MongoDB database. Create a \`.env\` file in the root of your project and add the following environment variable:
+
+
+DATABASE_URL="your_mongodb_connection_string"
+
+
+Replace \`your_mongodb_connection_string\` with your actual MongoDB connection string.
+
+If you're using a local MongoDB server, it may look something like this:
+
+
+DATABASE_URL="mongodb://localhost:27017/mybooksapp"
+
+
+For a cloud MongoDB (e.g., MongoDB Atlas), it might look like:
+
+
+DATABASE_URL="mongodb+srv://<username>:<password>@cluster0.mongodb.net/mybooksapp?retryWrites=true&w=majority"
+
+
+### 4. Running the Application
+
+Now you're ready to run the application!
+
+#### Development Mode
+
+To run the app in development mode (with hot reloading):
+
+\`\`\`bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+\`\`\`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open your browser and go to \`http://localhost:3000\`.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+#### Production Mode
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+To run the app in production mode:
 
-## Learn More
+1. Build the application:
 
-To learn more about Next.js, take a look at the following resources:
+   \`\`\`bash
+   npm run build
+   \`\`\`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Start the production server:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+   \`\`\`bash
+   npm start
+   \`\`\`
 
-## Deploy on Vercel
+Your app will now be running in production mode. You can access it at \`http://localhost:3000\`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 5. Explore the Features
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Once the application is running:
+
+- Sign in or sign up using the login form.
+- Add new books by providing the title, author, and ISBN.
+- Search your book collection by title, author, or ISBN.
+- View your personal book list with all details.
+
+### 6. Useful Commands
+
+- **\`npm run dev\`** - Starts the development server.
+- **\`npm run build\`** - Builds the application for production.
+- **\`npm start\`** - Starts the production server.
