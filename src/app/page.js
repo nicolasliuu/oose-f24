@@ -197,7 +197,7 @@ export default function Home() {
           >
             Sign In/Sign Up 
           </button>
-          <p className="text-black text-xs italic"> If you don`&apos;`t have an account you will be signed up automatically </p>
+          <p className="text-black text-xs italic"> If you don&apos;t have an account you will be signed up automatically </p>
         </form>
       </div>
     );
